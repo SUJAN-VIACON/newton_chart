@@ -7,10 +7,11 @@ export default function Home() {
   const [term, setTerm] = useState(0);
   const [xaxis, setXaxis] = useState();
   const [yaxis, setYaxis] = useState();
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const storeData = () => {
-    setData({ xaxis: xaxis,
-       yaxis: yaxis });
+    setData((oldData) => [...oldData, { xaxis, yaxis, timestamp: Date.now() }]);
+    setXaxis("");
+    setYaxis("");
   };
   console.log(data);
   return (
@@ -78,12 +79,14 @@ export default function Home() {
                 type="text"
                 placeholder="Enter the value"
                 className="text-black focus:outline-none mx-3 py-3 text-center bg-white border-b-4 border-indigo-500"
+                value={xaxis}
                 onChange={(e) => setXaxis(e.target.value)}
               />
               <input
                 type="text"
                 placeholder="Enter the value"
                 className=" text-black focus:outline-none mx-3 py-3 text-center bg-white border-b-4 border-indigo-500"
+                value={yaxis}
                 onChange={(e) => setYaxis(e.target.value)}
               />
               <span
@@ -95,27 +98,26 @@ export default function Home() {
               </span>
             </div>
 
-            {/* {data.map((e)=>{
-              
-              return(
+            {data.map((e) => {
+              return (
                 <div className=" flex">
-                    <input
-                      type="text"
-                      placeholder="Enter the value"
-                      className="text-black focus:outline-none mx-3 py-3 text-center bg-white border-b-4 border-indigo-500"
-                     value={e.xaxis} disabled
-                    />
-                    <input
-                      type="text"
-                      placeholder="Enter the value"
-                      className=" text-black focus:outline-none mx-3 py-3 text-center bg-white border-b-4 border-indigo-500"
-                      value={e.yaxis} disabled
-                    />
-                   
-                  </div>
-              )
-
-            })} */}
+                  <input
+                    type="text"
+                    placeholder="Enter the value"
+                    className="text-black focus:outline-none mx-3 py-3 text-center bg-green-400 border-b-4 border-indigo-500"
+                    value={e.xaxis}
+                    disabled
+                  />
+                  <input
+                    type="text"
+                    placeholder="Enter the value"
+                    className=" text-black focus:outline-none mx-3 py-3 text-center bg-sky-400 border-b-4 border-indigo-500"
+                    value={e.yaxis}
+                    disabled
+                  />
+                </div>
+              );
+            })}
           </form>
         </div>
       </div>
